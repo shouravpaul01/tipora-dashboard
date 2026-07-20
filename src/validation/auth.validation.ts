@@ -1,14 +1,17 @@
 import z from "zod";
 
+
 export const loginSchema = z.object({
-  identifier: z.string().nonempty("Email is required").email("Invalid email"),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone number is required"),
 
   password: z
     .string()
-    .nonempty("Password is required")
+    .trim()
     .min(6, "Password must be at least 6 characters"),
 });
-
 
 
 export const registerSchema = z.object({

@@ -11,17 +11,15 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import {
-  GalleryVerticalEndIcon,
-  AudioLinesIcon,
-  TerminalIcon,
+
   TerminalSquareIcon,
   BotIcon,
   BookOpenIcon,
   Settings2Icon,
-  FrameIcon,
-  PieChartIcon,
-  MapIcon,
+
   LogOut,
+  House,
+  Users,
 } from "lucide-react";
 import Logo from "./shared/Logo";
 import { Button } from "./ui/button";
@@ -29,75 +27,20 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/redux/features/authSlice";
 import { toast } from "sonner";
+import { Separator } from "./ui/separator";
 
 // This is sample data.
 const data = [
   {
-    title: "Playground",
-    url: "#",
-    icon: <TerminalSquareIcon />,
-    isActive: true,
-    items: [
-      {
-        title: "History",
-        url: "#",
-      },
-      {
-        title: "Starred",
-        url: "#",
-      },
-      {
-        title: "Settings",
-        url: "#",
-      },
-    ],
+    title: "Dashboard",
+    url: "/",
+    icon: <House />,
+   
   },
   {
-    title: "Models",
-    url: "#",
-    icon: <BotIcon />,
-    items: [
-      {
-        title: "Genesis",
-        url: "#",
-      },
-      {
-        title: "Explorer",
-        url: "#",
-      },
-      {
-        title: "Quantum",
-        url: "#",
-      },
-    ],
-  },
-  {
-    title: "Documentation",
-    url: "#",
-    icon: <BookOpenIcon />,
-    items: [
-      {
-        title: "Introduction",
-        url: "#",
-      },
-      {
-        title: "Get Started",
-        url: "#",
-      },
-      {
-        title: "Tutorials",
-        url: "#",
-      },
-      {
-        title: "Changelog",
-        url: "#",
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: <Settings2Icon />,
+    title: "Users",
+    url: "/users",
+    icon: <Users />,
    
   },
 
@@ -113,10 +56,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     router.push("/login");
   };
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <Logo />
+    <Sidebar collapsible="icon" {...props} className="text-white ">
+      <SidebarHeader className="flex items-center justify-center py-5">
+        <Logo src="/images/logo2.png"/>
       </SidebarHeader>
+     
       <SidebarContent>
         <NavMain items={data} />
       </SidebarContent>

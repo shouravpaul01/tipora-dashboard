@@ -10,31 +10,41 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
+  totalData?: number;
+
+  limit: number;
+  onLimitChange: (limit: number) => void;
+
   onPageChange: (page: number) => void;
 }
 
 export default function Pagination({
   currentPage,
   totalPages,
+  totalData,
+  limit,
+  onLimitChange,
   onPageChange,
 }: PaginationProps) {
-
   const getPageNumbers = () => {
     const pages: (number | "ellipsis")[] = [];
 
     if (totalPages <= 5) {
-      // If total pages are 5 or less, show all pages
       for (let i = 1; i <= totalPages; i++) pages.push(i);
-
     } else if (currentPage <= 3) {
-      // If user is near the beginning
       pages.push(1, 2, 3, 4, "ellipsis", totalPages);
-
     } else if (currentPage >= totalPages - 2) {
-      // If user is near the end
       pages.push(
         1,
         "ellipsis",
@@ -43,9 +53,7 @@ export default function Pagination({
         totalPages - 1,
         totalPages
       );
-
     } else {
-      // If user is somewhere in the middle
       pages.push(
         1,
         "ellipsis",
@@ -60,60 +68,106 @@ export default function Pagination({
     return pages;
   };
 
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1 && !totalData) return null;
+
+  const from = totalData ? (currentPage - 1) * limit + 1 : 0;
+  const to = totalData
+    ? Math.min(currentPage * limit, totalData)
+    : 0;
 
   return (
-    <ShadcnPagination>
-      <PaginationContent>
-        {/* Previous Button */}
-        <PaginationItem>
-          <PaginationPrevious
-            onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-            className={
-              currentPage === 1
-                ? "pointer-events-none opacity-40"
-                : "cursor-pointer hover:bg-primary/80! hover:text-white"
-            }
-          />
-        </PaginationItem>
+    <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      {/* Left */}
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">
+            Show
+          </span>
 
-        {/* Page Numbers */}
-        {getPageNumbers().map((page, index) =>
-          page === "ellipsis" ? (
-            <PaginationItem key={`ellipsis-${index}`}>
-              <PaginationEllipsis />
-            </PaginationItem>
-          ) : (
-            <PaginationItem key={page}>
-              <PaginationLink
-                isActive={currentPage === page}
-                onClick={() => onPageChange(page)}
-                className={
-                  currentPage === page
-                    ? "cursor-pointer bg-primary text-white  hover:bg-primary/80! hover:text-white"
-                    : "cursor-pointer hover:bg-primary/80! hover:text-white"
-                }
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          )
+          <Select
+            value={String(limit)}
+            onValueChange={(value) =>
+              onLimitChange(Number(value))
+            }
+          >
+            <SelectTrigger className="w-24">
+              <SelectValue />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <span className="text-sm text-muted-foreground">
+            entries
+          </span>
+        </div>
+
+        {totalData !== undefined && (
+          <p className="hidden text-sm text-muted-foreground md:block">
+            Showing <strong>{from}</strong> -{" "}
+            <strong>{to}</strong> of{" "}
+            <strong>{totalData}</strong>
+          </p>
         )}
+      </div>
 
-        {/* Next Button */}
-        <PaginationItem>
-          <PaginationNext
-            onClick={() =>
-              currentPage < totalPages && onPageChange(currentPage + 1)
-            }
-            className={
-              currentPage === totalPages
-                ? "pointer-events-none opacity-40"
-                : "cursor-pointer hover:bg-primary/80! hover:text-white"
-            }
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </ShadcnPagination>
+      {/* Right */}
+      {totalPages > 1 && (
+        <ShadcnPagination className="justify-end">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() =>
+                  currentPage > 1 &&
+                  onPageChange(currentPage - 1)
+                }
+                className={
+                  currentPage === 1
+                    ? "pointer-events-none opacity-40"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+
+            {getPageNumbers().map((page, index) =>
+              page === "ellipsis" ? (
+                <PaginationItem key={index}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              ) : (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    isActive={currentPage === page}
+                    onClick={() => onPageChange(page)}
+                    className="cursor-pointer"
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              )
+            )}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() =>
+                  currentPage < totalPages &&
+                  onPageChange(currentPage + 1)
+                }
+                className={
+                  currentPage === totalPages
+                    ? "pointer-events-none opacity-40"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </ShadcnPagination>
+      )}
+    </div>
   );
 }

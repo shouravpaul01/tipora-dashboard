@@ -1,85 +1,116 @@
 "use client";
 
-import { useForm, FormProvider } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, LockKeyhole, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
-import { FieldGroup, FieldSet, FieldSeparator } from "@/components/ui/field";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-
 import { useRouter, useSearchParams } from "next/navigation";
-import { loginSchema } from "@/validation/auth.validation";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight, Eye, EyeOff, Loader2, LockKeyhole } from "lucide-react";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+
+import { Button } from "@/components/ui/button";
+import { FieldGroup, FieldSeparator, FieldSet } from "@/components/ui/field";
+
 import { FormInput } from "../shared/form/FormInput";
-import { Separator } from "../ui/separator";
-import { GoogleIcon } from "../shared/Icon";
-import SocialAuth from "./SocialAuth";
+import { FormPhoneInput } from "../shared/form/FormPhoneInput";
+
+import { loginSchema } from "@/validation/auth.validation";
+
+import { useLoginMutation } from "@/redux/api/authApi";
+import { loginSuccess } from "@/redux/features/authSlice";
 
 export default function LoginForm() {
   const router = useRouter();
-  const params = useSearchParams();
-  const redirect = params.get("redirect");
+  const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+
+  const redirect = searchParams.get("redirect");
 
   const [showPassword, setShowPassword] = useState(false);
 
-  
+  const [login, { isLoading }] = useLoginMutation();
 
   const methods = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      identifier: "",
+      phone: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FieldValues) => {
     try {
-     
+      const res: any = await login({
+        phone: data.phone,
+        password: data.password,
+      }).unwrap();
 
-      toast.success("Login successful 🎉");
-      router.replace(redirect || "/");
+      dispatch(
+        loginSuccess({
+          accessToken: res.data.accessToken,
+          refreshToken: res.data.refreshToken,
+          user: res.data.user,
+        }),
+      );
+
+      toast.success(res.message || "Login successful 🎉");
+
+      methods.reset();
+
+      router.replace("/dashboard");
     } catch (error: any) {
       const apiError = error?.data;
 
-      if (apiError?.error) {
-        Object.values(apiError.error).forEach((messages: any) => {
-          if (Array.isArray(messages)) {
-            messages.forEach((msg) => toast.error(msg));
-          }
-        });
+      console.log(apiError);
+
+      if (apiError?.errorMessages?.length) {
+        apiError.errorMessages.forEach(
+          (err: { path: string; message: string }) => {
+            if (!err.path) {
+              // Global error
+              toast.error(err.message);
+            } else {
+              // Field error
+              methods.setError(err.path as any, {
+                type: "server",
+                message: err.message,
+              });
+            }
+          },
+        );
+
         return;
       }
 
-      // ✅ fallback
-      toast.error(apiError?.message || "Login failed ❌");
+      toast.error(apiError?.message || "Login failed");
     }
   };
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
         <FieldSet>
           <FieldGroup>
-            {/* Email */}
-            <FormInput
-              name="identifier"
-              label="Email"
-              type="email"
-              placeholder="you@example.com"
-              startIcon={{ icon: Mail }}
+            <FormPhoneInput
+              name="phone"
+              label="Phone Number"
+              placeholder="Enter your phone number"
+              defaultCountry="bd"
+              disabled={isLoading}
             />
 
-            {/* Password */}
             <FormInput
               name="password"
               label="Password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              startIcon={{ icon: LockKeyhole }}
+              disabled={isLoading}
+              startIcon={{
+                icon: LockKeyhole,
+              }}
               endIcon={{
                 icon: showPassword ? EyeOff : Eye,
                 onClick: () => setShowPassword((prev) => !prev),
+                disabled: isLoading,
               }}
             />
           </FieldGroup>
@@ -87,34 +118,19 @@ export default function LoginForm() {
           <FieldSeparator />
         </FieldSet>
 
-        {/* Forgot password */}
-        <div className="flex justify-end -mt-2">
-          <Link
-            href="/forgot-password"
-            className="text-sm text-primary hover:underline font-medium"
-          >
-            Forgot password?
-          </Link>
-        </div>
-
-        {/* Submit */}
-        <Button type="submit" className="w-full h-12" >
-         Sign In <ArrowRight />
+        <Button type="submit" className="h-12 w-full" disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Loader2 className="size-4 animate-spin" />
+              Signing In...
+            </>
+          ) : (
+            <>
+              Sign In
+              <ArrowRight className="size-4" />
+            </>
+          )}
         </Button>
-
-      
-        <SocialAuth/>
-
-        {/* Signup */}
-        <p className="text-center text-sm text-muted-foreground pt-1">
-          Don’t have an account?{" "}
-          <Link
-            href="/register"
-            className="text-primary font-semibold hover:underline"
-          >
-            Sign up
-          </Link>
-        </p>
       </form>
     </FormProvider>
   );

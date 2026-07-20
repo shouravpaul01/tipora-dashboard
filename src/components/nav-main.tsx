@@ -34,11 +34,11 @@ export function NavMain({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
 
   const activeClass =
-    "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground";
+    "h-10! bg-primary! text-white! hover:bg-primary! hover:text-white!";
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+     
 
       <SidebarMenu>
         {items.map((item) => {
