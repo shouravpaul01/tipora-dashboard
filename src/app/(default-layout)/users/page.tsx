@@ -17,6 +17,10 @@ import {
   useGetUserSummaryQuery,
   useUpdateUserStatusMutation,
 } from "@/redux/api/userApi";
+import { useDebounce } from "@/hooks/useDebounce";
+import UserFilter from "@/components/users/UserFilter";
+import SkeletonLoading from "@/components/shared/SkeletonLoading";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 export default function UsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +28,10 @@ export default function UsersPage() {
 
   const [selectedUserId, setSelectedUserId] = useState("");
   const [showDetails, setShowDetails] = useState(false);
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("");
+
+  const debouncedSearch = useDebounce(search);
 
   /**
    * Users
@@ -35,6 +43,8 @@ export default function UsersPage() {
   } = useGetAllUsersQuery({
     page: currentPage,
     limit,
+    searchTerm: debouncedSearch,
+    status,
   });
 
   /**
@@ -46,22 +56,18 @@ export default function UsersPage() {
   /**
    * Single User
    */
-  const { data: userDetails } = useGetSingleUserQuery(
-    selectedUserId,
-    {
-      skip: !selectedUserId,
-    }
-  );
+  const { data: userDetails } = useGetSingleUserQuery(selectedUserId, {
+    skip: !selectedUserId,
+  });
 
   /**
    * Update Status
    */
-  const [updateStatus, { isLoading: updating }] =
-    useUpdateUserStatusMutation();
+  const [updateStatus, { isLoading: updating }] = useUpdateUserStatusMutation();
 
   const handleStatusChange = async (
     id: string,
-    status: "ACTIVE" | "BLOCKED"
+    status: "ACTIVE" | "BLOCKED",
   ) => {
     try {
       const res: any = await updateStatus({
@@ -81,39 +87,27 @@ export default function UsersPage() {
   };
 
   if (usersLoading || summaryLoading) {
-    return (
-      <div className="space-y-6">
-        <div className="grid gap-4 lg:grid-cols-5 md:grid-cols-2">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Skeleton key={i} className="h-28" />
-          ))}
-        </div>
-
-        <Skeleton className="h-[500px]" />
-      </div>
-    );
+    return <SkeletonLoading />;
   }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Users</h1>
-
-        <p className="text-muted-foreground">
-          Manage platform users
-        </p>
-      </div>
-
-      <UserSummaryCards
-        summary={summaryRes?.data}
+      <SectionHeader
+        title="Users Management"
+        description=" Manage platform users"
       />
-
+      <UserSummaryCards summary={summaryRes?.data} />
+      <UserFilter
+        search={search}
+        onSearchChange={setSearch}
+        status={status}
+        onStatusChange={setStatus}
+      />
       <UserTable
         loading={isFetching || updating}
         users={usersRes?.data || []}
         onStatusChange={handleStatusChange}
         onViewDetails={handleViewDetails}
-
       />
 
       <Pagination

@@ -213,10 +213,10 @@ export function UserTable({
               <TableCell className="text-right">
                 <Button
   variant="outline"
-  size="sm"
+  size="icon-sm"
   onClick={() => onViewDetails(user.id)}
 >
-  <Eye className="mr-2 size-4" />
+  <Eye className="size-4" />
 
 </Button>
               </TableCell>

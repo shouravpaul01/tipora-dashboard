@@ -23,7 +23,7 @@ export default function DashboardLayout({children}:{children:ReactNode}) {
            
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-5 md:p-10 pt-0">
+        <div className="flex flex-1 flex-col gap-4 p-5 md:p-10 pt-0 bg-slate-50">
           {children}
         </div>
       </SidebarInset>

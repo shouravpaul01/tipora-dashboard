@@ -45,13 +45,13 @@ export default function SectionHeader({
           </div>
         )}
         <Heading
-          size={"h2"}
+          size={"h4"}
           className={cn("font-playfair max-w-3xl", titleClassName)}
         >
           {title}
         </Heading>
         {description && (
-          <p className="text-neutral-500  max-w-[550px] mt-2">{description}</p>
+          <p className="text-neutral-500  max-w-[550px] ">{description}</p>
         )}
       </div>
 

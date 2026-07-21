@@ -95,6 +95,7 @@ export function UserSummaryCards({
           <Card
             key={card.title}
             className={`
+              p-0
               group
               relative
               overflow-hidden

@@ -22,10 +22,8 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   totalData?: number;
-
   limit: number;
   onLimitChange: (limit: number) => void;
-
   onPageChange: (page: number) => void;
 }
 
@@ -78,7 +76,7 @@ export default function Pagination({
   return (
     <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
       {/* Left */}
-      <div className="flex items-center gap-4">
+      <div className="flex  items-center gap-4">
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">
             Show
@@ -107,33 +105,34 @@ export default function Pagination({
           </span>
         </div>
 
-        {totalData !== undefined && (
-          <p className="hidden text-sm text-muted-foreground md:block">
-            Showing <strong>{from}</strong> -{" "}
-            <strong>{to}</strong> of{" "}
-            <strong>{totalData}</strong>
-          </p>
-        )}
+       {totalData !== undefined && (
+  <p className="hidden md:block whitespace-nowrap text-sm text-muted-foreground">
+    Showing <strong>{from}</strong> - <strong>{to}</strong> of{" "}
+    <strong>{totalData}</strong>
+  </p>
+)}
       </div>
 
       {/* Right */}
       {totalPages > 1 && (
         <ShadcnPagination className="justify-end">
-          <PaginationContent>
+          <PaginationContent className="gap-2">
+            {/* Previous */}
             <PaginationItem>
               <PaginationPrevious
                 onClick={() =>
                   currentPage > 1 &&
                   onPageChange(currentPage - 1)
                 }
-                className={
+                className={`transition-all h-10 ${
                   currentPage === 1
                     ? "pointer-events-none opacity-40"
-                    : "cursor-pointer"
-                }
+                    : "cursor-pointer border bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+                }`}
               />
             </PaginationItem>
 
+            {/* Page Numbers */}
             {getPageNumbers().map((page, index) =>
               page === "ellipsis" ? (
                 <PaginationItem key={index}>
@@ -144,7 +143,11 @@ export default function Pagination({
                   <PaginationLink
                     isActive={currentPage === page}
                     onClick={() => onPageChange(page)}
-                    className="cursor-pointer"
+                    className={`cursor-pointer transition-all h-10 ${
+                      currentPage === page
+                        ? "border bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+                        : "hover:bg-primary/10"
+                    }`}
                   >
                     {page}
                   </PaginationLink>
@@ -152,17 +155,18 @@ export default function Pagination({
               )
             )}
 
+            {/* Next */}
             <PaginationItem>
               <PaginationNext
                 onClick={() =>
                   currentPage < totalPages &&
                   onPageChange(currentPage + 1)
                 }
-                className={
+                className={`transition-all h-10 ${
                   currentPage === totalPages
                     ? "pointer-events-none opacity-40"
-                    : "cursor-pointer"
-                }
+                    : "cursor-pointer border bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+                }`}
               />
             </PaginationItem>
           </PaginationContent>

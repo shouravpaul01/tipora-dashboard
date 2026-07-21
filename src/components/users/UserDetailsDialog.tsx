@@ -25,7 +25,7 @@ import {
   Wallet,
 } from "lucide-react";
 
-import { User } from "@/type";
+
 import { formatDate } from "@/utils/formatDate";
 
 interface UserDetailsDialogProps {
@@ -79,9 +79,7 @@ export function UserDetailsDialog({
                   </Badge>
                 </div>
 
-                <p className="mt-2 text-sm text-muted-foreground">
-                  User ID • {user.id}
-                </p>
+                
 
                 <p className="mt-1 text-sm text-muted-foreground">
                   Joined {formatDate(user.createdAt)}
@@ -97,7 +95,7 @@ export function UserDetailsDialog({
             <div className="grid gap-5 px-8 md:grid-cols-3">
               {/* Email */}
 
-              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg p-0">
                 <CardContent className="flex items-start gap-4 p-5">
                   <div className="rounded-xl bg-primary/10 p-3">
                     <Mail className="size-5 text-primary" />
@@ -120,8 +118,8 @@ export function UserDetailsDialog({
                         </>
                       ) : (
                         <>
-                          <XCircle className="size-4 text-red-500" />
-                          <span className="text-red-600">Not Verified</span>
+                          <XCircle className="size-4 text-yellow-600" />
+                          <span className="text-yellow-600">Not Verified</span>
                         </>
                       )}
                     </div>
@@ -131,7 +129,7 @@ export function UserDetailsDialog({
 
               {/* Phone */}
 
-              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg p-0">
                 <CardContent className="flex items-start gap-4 p-5">
                   <div className="rounded-xl bg-primary/10 p-3">
                     <Phone className="size-5 text-primary" />
@@ -152,8 +150,8 @@ export function UserDetailsDialog({
                         </>
                       ) : (
                         <>
-                          <XCircle className="size-4 text-red-500" />
-                          <span className="text-red-600">Not Verified</span>
+                          <XCircle className="size-4 text-yellow-500" />
+                          <span className="text-yellow-500">Not Verified</span>
                         </>
                       )}
                     </div>
@@ -163,7 +161,7 @@ export function UserDetailsDialog({
 
               {/* Joined */}
 
-              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg p-0">
                 <CardContent className="flex items-start gap-4 p-5">
                   <div className="rounded-xl bg-primary/10 p-3">
                     <Calendar className="size-5 text-primary" />
@@ -190,7 +188,7 @@ export function UserDetailsDialog({
             {/* ================= Statistics ================= */}
 
             <div className="grid gap-5 px-8 md:grid-cols-2 xl:grid-cols-4">
-              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg p-0">
                 <CardContent className="flex items-center justify-between p-6">
                   <div>
                     <p className="text-sm text-muted-foreground">
@@ -212,7 +210,7 @@ export function UserDetailsDialog({
                 </CardContent>
               </Card>
 
-              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg p-0">
                 <CardContent className="flex items-center justify-between p-6">
                   <div>
                     <p className="text-sm text-muted-foreground">
@@ -234,7 +232,7 @@ export function UserDetailsDialog({
                 </CardContent>
               </Card>
 
-              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg p-0">
                 <CardContent className="flex items-center justify-between p-6">
                   <div>
                     <p className="text-sm text-muted-foreground">
@@ -256,7 +254,7 @@ export function UserDetailsDialog({
                 </CardContent>
               </Card>
 
-              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <Card className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg p-0">
                 <CardContent className="flex items-center justify-between p-6">
                   <div>
                     <p className="text-sm text-muted-foreground">
@@ -281,8 +279,8 @@ export function UserDetailsDialog({
 
             {/* ================= Activity ================= */}
 
-            <div className="grid gap-6 px-8 pb-8 lg:grid-cols-2">
-              <Card>
+            <div className="grid gap-6 px-8 pb-8 lg:grid-cols-2 ">
+              <Card className="p-0">
                 <CardContent className="p-6">
                   <h3 className="mb-6 text-lg font-semibold">
                     Activity Summary
@@ -340,7 +338,7 @@ export function UserDetailsDialog({
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="p-0">
                 <CardContent className="p-6">
                   <h3 className="mb-6 text-lg font-semibold">
                     Financial Summary
@@ -394,11 +392,7 @@ export function UserDetailsDialog({
           </div>
         </div>
         <div className="shrink-0 border-t bg-muted/20 px-8 py-5">
-          <div className="flex flex-col gap-3 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
-            <div>
-              <span className="font-medium text-foreground">User ID:</span>{" "}
-              {user.id}
-            </div>
+          <div className="flex  text-sm text-muted-foreground md:flex-row md:items-center md:justify-end">
 
             <div className="flex items-center gap-6">
               <div>

@@ -20,6 +20,7 @@ import {
   LogOut,
   House,
   Users,
+  BadgeCent,
 } from "lucide-react";
 import Logo from "./shared/Logo";
 import { Button } from "./ui/button";
@@ -43,7 +44,12 @@ const data = [
     icon: <Users />,
    
   },
-
+{
+    title: "Tips",
+    url: "/tips",
+    icon: <BadgeCent />,
+   
+  },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

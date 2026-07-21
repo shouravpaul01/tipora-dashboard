@@ -7,10 +7,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 
 import { RootState } from "../store";
-import {
-  logout,
-  updateAccessToken,
-} from "../features/authSlice";
+import { logout, updateAccessToken } from "../features/authSlice";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -57,7 +54,7 @@ const baseQueryWithReauth: BaseQueryFn<
         },
       },
       api,
-      extraOptions
+      extraOptions,
     );
 
     if (refreshResult.data?.success) {
@@ -66,7 +63,7 @@ const baseQueryWithReauth: BaseQueryFn<
       api.dispatch(
         updateAccessToken({
           accessToken,
-        })
+        }),
       );
 
       // Retry original request with new token
@@ -83,10 +80,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithReauth,
 
-  tagTypes: [
-    "User",
-   
-  ],
+  tagTypes: ["User", "Tip", "Dashboard"],
 
   endpoints: () => ({}),
 });
