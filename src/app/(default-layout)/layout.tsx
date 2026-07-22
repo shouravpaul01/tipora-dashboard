@@ -1,21 +1,37 @@
+import { AppSidebar } from "@/components/app-sidebar"
 
-import Navbar from "@/components/shared/navbar";
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { ReactNode } from "react"
 
-type Props = {
-  children: React.ReactNode;
-  
-};
-
-export default function DefaultLayout({ children }: Props) {
+export default function DashboardLayout({children}:{children:ReactNode}) {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-
-      <main className="flex-1">
-        {children}
-      </main>
-
-      {/* <Footer /> */}
-    </div>
-  );
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-vertical:h-4 data-vertical:self-auto"
+            />
+          <p className="text-xl font-bold">
+  Welcome{" "}
+  <span className="inline-block animate-wave origin-[70%_70%] text-2xl">
+    👋
+  </span>
+</p>
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-5 md:p-10 pt-0 bg-slate-50">
+          {children}
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
