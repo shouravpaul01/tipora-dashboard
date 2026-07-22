@@ -34,13 +34,13 @@ export function NavMain({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
 
   const activeClass =
-    "h-10! bg-primary! text-white! hover:bg-primary! hover:text-white!";
+    " bg-primary! text-white! hover:bg-primary! hover:text-white!";
 
   return (
     <SidebarGroup>
      
 
-      <SidebarMenu>
+      <SidebarMenu className="space-y-2">
         {items.map((item) => {
           const hasChildren = !!item.items?.length;
 
@@ -56,12 +56,12 @@ export function NavMain({ items }: { items: NavItem[] }) {
           // Menu without children
           if (!hasChildren) {
             return (
-              <SidebarMenuItem key={item.title}>
+              <SidebarMenuItem key={item.title} >
                 <SidebarMenuButton
                   asChild
                   tooltip={item.title}
                   isActive={isParentActive}
-                  className={cn(isParentActive && activeClass)}
+                  className={cn("h-9!",isParentActive && activeClass)}
                 >
                   <Link href={item.url}>
                     {item.icon}

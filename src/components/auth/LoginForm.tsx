@@ -57,7 +57,7 @@ export default function LoginForm() {
 
       methods.reset();
 
-      router.replace("/dashboard");
+      router.replace("/");
     } catch (error: any) {
       const apiError = error?.data;
 
@@ -94,7 +94,7 @@ export default function LoginForm() {
               name="phone"
               label="Phone Number"
               placeholder="Enter your phone number"
-              defaultCountry="bd"
+              defaultCountry="usd"
               disabled={isLoading}
             />
 

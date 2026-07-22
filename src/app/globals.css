@@ -183,6 +183,7 @@
   --animate-rotate-slow: rotateSlow 20s linear infinite;
   --animate-pulse-soft: pulseSoft 4s ease-in-out infinite;
   --animate-scale-soft: scaleSoft 5s ease-in-out infinite;
+  --animate-wave: wave 2s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -238,4 +239,13 @@
   50% {
     transform: scale(1.12);
   }
+}
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60%,100% { transform: rotate(0deg); }
 }

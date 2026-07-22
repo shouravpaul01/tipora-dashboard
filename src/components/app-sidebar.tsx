@@ -73,7 +73,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <Button
           variant="outline"
-          className="w-full flex items-center justify-center gap-2 text-red-600 border-red-600 hover:bg-red-50 hover:text-red-700"
+          className="w-full h-9 flex items-center justify-center gap-2 bg-primary/10 text-red-600 border-red-600 hover:bg-primary hover:text-white"
           onClick={() => handleLogout()}
         >
           <LogOut className="size-4" />

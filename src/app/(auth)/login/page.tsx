@@ -42,7 +42,14 @@ export default function LoginPage() {
       <div className="flex w-full items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-lg space-y-12">
           <SectionHeader
-            title="Welcome 👋"
+            title={
+    <div className="flex items-center gap-2">
+      <span>Welcome</span>
+      <span className="inline-block animate-wave origin-[70%_70%]">
+        👋
+      </span>
+    </div>
+  }
             description="Enter your credentials to access your account"
           />
 

@@ -27,7 +27,7 @@ export function DashboardSummaryCards({
   const cardItems = [
     {
       title: "Total Users",
-      value: cards.totalUsers,
+      value: cards?.totalUsers,
       subTitle: "Registered users",
       icon: Users,
       iconBg: "bg-blue-100",
@@ -37,7 +37,7 @@ export function DashboardSummaryCards({
     },
     {
       title: "Total Tips",
-      value: cards.totalTips,
+      value: cards?.totalTips,
       subTitle: "Tips sent",
       icon: Gift,
       iconBg: "bg-green-100",
@@ -47,7 +47,7 @@ export function DashboardSummaryCards({
     },
     {
       title: "Total Withdraws",
-      value: cards.totalWithdraws,
+      value: cards?.totalWithdraws,
       subTitle: "Withdrawal requests",
       icon: Wallet,
       iconBg: "bg-violet-100",
@@ -57,7 +57,7 @@ export function DashboardSummaryCards({
     },
     {
       title: "Platform Revenue",
-      value: `$${cards.totalPlatformRevenue.toLocaleString()}`,
+      value: `$${cards?.totalPlatformRevenue.toLocaleString()}`,
       subTitle: "Total earnings",
       icon: DollarSign,
       iconBg: "bg-orange-100",

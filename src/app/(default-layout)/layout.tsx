@@ -20,7 +20,12 @@ export default function DashboardLayout({children}:{children:ReactNode}) {
               orientation="vertical"
               className="mr-2 data-vertical:h-4 data-vertical:self-auto"
             />
-           
+          <p className="text-xl font-bold">
+  Welcome{" "}
+  <span className="inline-block animate-wave origin-[70%_70%] text-2xl">
+    👋
+  </span>
+</p>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-5 md:p-10 pt-0 bg-slate-50">
