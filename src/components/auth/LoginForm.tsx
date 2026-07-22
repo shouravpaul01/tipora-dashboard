@@ -57,7 +57,8 @@ export default function LoginForm() {
 
       methods.reset();
 
-      router.replace("/");
+      router.push("/");
+      
     } catch (error: any) {
       const apiError = error?.data;
 
