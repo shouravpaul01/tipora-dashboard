@@ -1,46 +1,17 @@
-import { baseApi } from "@/redux/api/baseApi";
+import { baseApi } from "./baseApi";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (credentials) => ({
-        url: "/auth/login",
-        method: "POST",
-        body: credentials,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    registerUser: builder.mutation({
-      query: (credentials) => ({
+    // Register
+    register: builder.mutation({
+      query: (data) => ({
         url: "/auth/register",
         method: "POST",
-        body: credentials,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    socialAuth: builder.mutation({
-      query: (credentials) => ({
-        url: "/auth/social-login",
-        method: "POST",
-        body: credentials,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    forgotPassword: builder.mutation({
-      query: (email) => ({
-        url: "/auth/forgot-password",
-        method: "POST",
-        body: email,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    resendOtp: builder.mutation({
-      query: (email) => ({
-        url: "/auth/resend-otp",
-        method: "POST",
-        body: email,
+        body: data,
       }),
     }),
+
+    // Verify Registration OTP
     verifyOtp: builder.mutation({
       query: (data) => ({
         url: "/auth/verify-otp",
@@ -48,6 +19,44 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    // Login
+    login: builder.mutation({
+      query: (data) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Refresh Token
+    refreshToken: builder.mutation({
+      query: (data) => ({
+        url: "/auth/refresh-token",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Forgot Password
+    forgotPassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/forgot-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Verify Reset OTP
+    verifyResetOtp: builder.mutation({
+      query: (data) => ({
+        url: "/auth/verify-reset-otp",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Reset Password
     resetPassword: builder.mutation({
       query: (data) => ({
         url: "/auth/reset-password",
@@ -55,27 +64,22 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    // Change Password
     changePassword: builder.mutation({
       query: (data) => ({
         url: "/auth/change-password",
         method: "PATCH",
         body: data,
       }),
-    }),
-   
-    updateUser: builder.mutation({
-      query: (data) => ({
-        url: "/users/profile",
-        method: "PUT",
-        body: data,
-      }),
       invalidatesTags: ["User"],
     }),
-     logoutApi: builder.mutation({
+
+    // Logout
+    logout: builder.mutation({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
-        
       }),
       invalidatesTags: ["User"],
     }),
@@ -83,15 +87,13 @@ export const authApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useLoginMutation,
-  useRegisterUserMutation,
-  useSocialAuthMutation,
-  useForgotPasswordMutation,
-  useResendOtpMutation,
+  useRegisterMutation,
   useVerifyOtpMutation,
+  useLoginMutation,
+  useRefreshTokenMutation,
+  useForgotPasswordMutation,
+  useVerifyResetOtpMutation,
   useResetPasswordMutation,
   useChangePasswordMutation,
-
-  useUpdateUserMutation,
-  useLogoutApiMutation
+  useLogoutMutation,
 } = authApi;

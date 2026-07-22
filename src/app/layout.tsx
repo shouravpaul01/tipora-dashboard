@@ -5,6 +5,9 @@ import {
   JetBrains_Mono,
 } from "next/font/google";
 import "./globals.css";
+import ReduxProvider from "@/redux/ReduxProvider";
+import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const fontSans = Roboto({
   subsets: ["latin"],
@@ -40,7 +43,8 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >
-        {children}
+        <Toaster richColors />
+        <ReduxProvider><TooltipProvider>{children}</TooltipProvider></ReduxProvider>
       </body>
     </html>
   );

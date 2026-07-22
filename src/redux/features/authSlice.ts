@@ -1,55 +1,94 @@
-import { TTokenData } from "@/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
+
+import { User } from "@/type";
 
 interface AuthState {
   token: string | null;
-  refresh_token: string | null;
-  user: TTokenData | null;
+  refreshToken: string | null;
+  user: User | null;
+  isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
-  token: null,
-  refresh_token: null,
+  token: Cookies.get("accessToken") || null,
+  refreshToken: Cookies.get("refreshToken") || null,
   user: null,
+  isAuthenticated: !!Cookies.get("accessToken"),
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<{ token: string }>) => {
-      const decodeData: any = jwtDecode(action.payload.token);
-
-      state.token = action.payload.token;
-      state.user = {
-        id: decodeData?.id,
-        name: decodeData?.name,
-        email: decodeData?.email,
-        role: decodeData?.role,
-        photo: decodeData?.photo,
-        phone: decodeData?.phone,
-      };
-      Cookies.set("accessToken", action.payload.token);
-    },
-
-    setRefreshToken: (
+    // ==========================
+    // Login
+    // ==========================
+    loginSuccess: (
       state,
-      action: PayloadAction<{ refresh_token: string }>,
+      action: PayloadAction<{
+        accessToken: string;
+        refreshToken: string;
+        user: User;
+      }>
     ) => {
-      state.refresh_token = action.payload.refresh_token;
+      const { accessToken, refreshToken, user } = action.payload;
+
+      state.token = accessToken;
+      state.refreshToken = refreshToken;
+      state.user = user;
+      state.isAuthenticated = true;
+
+      Cookies.set("accessToken", accessToken);
+
+      Cookies.set("refreshToken", refreshToken);
     },
 
+    // ==========================
+    // Update Access Token
+    // ==========================
+    updateAccessToken: (
+      state,
+      action: PayloadAction<{
+        accessToken: string;
+      }>
+    ) => {
+      state.token = action.payload.accessToken;
+      state.isAuthenticated = true;
+
+      Cookies.set("accessToken", action.payload.accessToken);
+    },
+
+    // ==========================
+    // Update User
+    // ==========================
+    setUser: (
+      state,
+      action: PayloadAction<User>
+    ) => {
+      state.user = action.payload;
+    },
+
+    // ==========================
+    // Logout
+    // ==========================
     logout: (state) => {
       state.token = null;
-      state.refresh_token = null;
+      state.refreshToken = null;
       state.user = null;
+      state.isAuthenticated = false;
+
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
     },
   },
 });
 
-export const { setUser, setRefreshToken, logout } = authSlice.actions;
+export const {
+  loginSuccess,
+  updateAccessToken,
+  setUser,
+  logout,
+} = authSlice.actions;
+
 export default authSlice.reducer;
