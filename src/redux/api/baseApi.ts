@@ -9,11 +9,7 @@ import {
 import { RootState } from "../store";
 import { logout, updateAccessToken } from "../features/authSlice";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-if (!baseUrl) {
-  throw new Error("NEXT_PUBLIC_BASE_URL is not set");
-}
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
 
 const baseQuery = fetchBaseQuery({
   baseUrl,
@@ -38,38 +34,38 @@ const baseQueryWithReauth: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error?.status === 401) {
-    const refreshToken = (api.getState() as RootState).auth.refreshToken;
-
-    if (!refreshToken) {
-      api.dispatch(logout());
-      return result;
-    }
-
     const refreshResult: any = await baseQuery(
       {
         url: "/auth/refresh-token",
         method: "POST",
-        body: {
-          refreshToken,
-        },
       },
       api,
       extraOptions,
     );
 
     if (refreshResult.data?.success) {
-      const accessToken = refreshResult.data.data.accessToken;
-
       api.dispatch(
         updateAccessToken({
-          accessToken,
+          accessToken: refreshResult.data.data.accessToken,
         }),
       );
 
-      // Retry original request with new token
       result = await baseQuery(args, api, extraOptions);
     } else {
+      await baseQuery(
+        {
+          url: "/auth/logout",
+          method: "POST",
+        },
+        api,
+        extraOptions,
+      );
+
       api.dispatch(logout());
+
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      }
     }
   }
 

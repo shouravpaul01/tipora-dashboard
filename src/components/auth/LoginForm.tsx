@@ -48,13 +48,14 @@ export default function LoginForm() {
       dispatch(
         loginSuccess({
           accessToken: res.data.accessToken,
-          refreshToken: res.data.refreshToken,
           user: res.data.user,
         }),
       );
-      router.push("/");
-      router.refresh();
+
       toast.success(res.message || "Login successful 🎉");
+
+      router.replace("/");
+      router.refresh();
 
       methods.reset();
     } catch (error: any) {

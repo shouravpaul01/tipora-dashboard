@@ -1,6 +1,7 @@
 // proxy.ts
 import { NextRequest, NextResponse } from "next/server";
 import { jwtDecode } from "jwt-decode";
+import { UserRole } from "./type";
 
 interface JwtPayload {
   role: string;
@@ -27,7 +28,7 @@ export function proxy(request: NextRequest) {
   try {
     const payload = jwtDecode<JwtPayload>(token);
 
-    if (payload.role !== "ADMIN") {
+    if (payload.role !==UserRole.ADMIN) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
