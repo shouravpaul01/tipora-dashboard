@@ -52,13 +52,11 @@ export default function LoginForm() {
           user: res.data.user,
         }),
       );
-
+      router.push("/");
+      router.refresh();
       toast.success(res.message || "Login successful 🎉");
 
       methods.reset();
-
-      router.push("/");
-      router.refresh()
     } catch (error: any) {
       const apiError = error?.data;
 
