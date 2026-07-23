@@ -54,9 +54,9 @@ export default function LoginForm() {
 
       toast.success(res.message || "Login successful 🎉");
 
-      router.replace("/");
-      router.refresh();
-
+      // router.replace("/");
+      // router.refresh();
+      window.location.replace("/");
       methods.reset();
     } catch (error: any) {
       const apiError = error?.data;
