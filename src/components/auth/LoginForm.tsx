@@ -56,7 +56,9 @@ export default function LoginForm() {
 
       // router.replace("/");
       // router.refresh();
-      window.location.replace("/");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
       methods.reset();
     } catch (error: any) {
       const apiError = error?.data;
