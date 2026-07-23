@@ -39,9 +39,9 @@ const authSlice = createSlice({
       state.user = user;
       state.isAuthenticated = true;
 
-      Cookies.set("accessToken", accessToken);
+      // Cookies.set("accessToken", accessToken);
 
-      Cookies.set("refreshToken", refreshToken);
+      // Cookies.set("refreshToken", refreshToken);
     },
 
     // ==========================
