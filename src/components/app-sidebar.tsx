@@ -19,6 +19,10 @@ import {
   House,
   Users,
   BadgeCent,
+  Wallet,
+  HandCoins,
+  HandFist,
+  Settings,
 } from "lucide-react";
 import Logo from "./shared/Logo";
 import { Button } from "./ui/button";
@@ -44,7 +48,27 @@ const data = [
   {
     title: "Tips",
     url: "/tips",
+    icon: <HandCoins />,
+  },
+   {
+    title: "Withdraw",
+    url: "/withdraw",
+    icon: <Wallet />,
+  },
+    {
+    title: "Platform Revenue",
+    url: "/platform-revenue",
     icon: <BadgeCent />,
+  },
+  {
+    title: "Support",
+    url: "/support",
+    icon: <HandFist />,
+  },
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: <Settings />,
   },
 ];
 
