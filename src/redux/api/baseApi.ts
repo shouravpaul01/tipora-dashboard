@@ -33,41 +33,41 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result.error?.status === 401) {
-    const refreshResult: any = await baseQuery(
-      {
-        url: "/auth/refresh-token",
-        method: "POST",
-      },
-      api,
-      extraOptions,
-    );
+  // if (result.error?.status === 401) {
+  //   const refreshResult: any = await baseQuery(
+  //     {
+  //       url: "/auth/refresh-token",
+  //       method: "POST",
+  //     },
+  //     api,
+  //     extraOptions,
+  //   );
 
-    if (refreshResult.data?.success) {
-      api.dispatch(
-        updateAccessToken({
-          accessToken: refreshResult.data.data.accessToken,
-        }),
-      );
+  //   if (refreshResult.data?.success) {
+  //     api.dispatch(
+  //       updateAccessToken({
+  //         accessToken: refreshResult.data.data.accessToken,
+  //       }),
+  //     );
 
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      await baseQuery(
-        {
-          url: "/auth/logout",
-          method: "POST",
-        },
-        api,
-        extraOptions,
-      );
+  //     result = await baseQuery(args, api, extraOptions);
+  //   } else {
+  //     await baseQuery(
+  //       {
+  //         url: "/auth/logout",
+  //         method: "POST",
+  //       },
+  //       api,
+  //       extraOptions,
+  //     );
 
-      api.dispatch(logout());
+  //     api.dispatch(logout());
 
-      if (typeof window !== "undefined") {
-        window.location.href = "/login";
-      }
-    }
-  }
+  //     if (typeof window !== "undefined") {
+  //       window.location.href = "/login";
+  //     }
+  //   }
+  // }
 
   return result;
 };
@@ -76,7 +76,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithReauth,
 
-  tagTypes: ["User", "Tip", "Dashboard"],
+  tagTypes: ["User", "Tip", "Dashboard","Withdraw"],
 
   endpoints: () => ({}),
 });
