@@ -29,6 +29,7 @@ import {
 
 import { formatDate } from "@/utils/formatDate";
 import { cn } from "@/lib/utils";
+import { getInitials, getStatusLabel } from "@/constant";
 
 interface TipDetailsDialogProps {
   open: boolean;
@@ -61,18 +62,9 @@ export function TipDetailsDialog({
 }: TipDetailsDialogProps) {
   if (!tip) return null;
 
-  const getInitials = (firstName?: string, lastName?: string) =>
-    `${firstName?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
+  
 
-  const getStatusLabel = (status: string) => {
-    const labels: Record<string, string> = {
-      COMPLETED: "Completed",
-      PENDING: "Pending",
-      FAILED: "Failed",
-      REFUNDED: "Refunded",
-    };
-    return labels[status] || status;
-  };
+  
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

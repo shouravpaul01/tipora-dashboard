@@ -12,6 +12,7 @@ import {
   Card,
   CardContent,
 } from "@/components/ui/card";
+import { SummaryCard } from "../shared/SummaryCard";
 
 interface UserSummaryCardsProps {
   summary: {
@@ -88,74 +89,10 @@ export function UserSummaryCards({
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
-      {cards.map((card) => {
-        const Icon = card.icon;
-
-        return (
-          <Card
-            key={card.title}
-            className={`
-              p-0
-              group
-              relative
-              overflow-hidden
-              border
-              ${card.border}
-              border-t-4
-              shadow-sm
-              transition-all
-              duration-300
-              hover:-translate-y-1
-              hover:shadow-xl
-            `}
-          >
-            {/* background glow */}
-            <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/5 blur-3xl transition-all duration-300 group-hover:scale-125" />
-
-            <CardContent className="relative p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {card.title}
-                  </p>
-
-                  <h2 className="mt-3 text-4xl font-bold tracking-tight">
-                    {card.value.toLocaleString()}
-                  </h2>
-
-                  <div className="mt-3 flex items-center gap-2">
-                    <span className="inline-flex h-2 w-2 rounded-full bg-green-500" />
-
-                    <p className="text-xs text-muted-foreground">
-                      {card.subTitle}
-                    </p>
-                  </div>
-                </div>
-
-                <div
-                  className={`
-                    flex
-                    h-14
-                    w-14
-                    items-center
-                    justify-center
-                    rounded-2xl
-                    ${card.iconBg}
-                    transition-transform
-                    duration-300
-                    group-hover:rotate-6
-                    group-hover:scale-110
-                  `}
-                >
-                  <Icon
-                    className={`h-7 w-7 ${card.iconColor}`}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })}
+      {cards.map((card) => <SummaryCard
+                key={card.title}
+                {...card}
+              />)}
     </div>
   );
 }

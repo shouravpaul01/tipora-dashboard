@@ -84,7 +84,7 @@ export default function FilterDatePicker({
           mode="single"
           selected={value}
           onSelect={onChange}
-          
+        captionLayout="dropdown"  
         />
       </PopoverContent>
     </Popover>
