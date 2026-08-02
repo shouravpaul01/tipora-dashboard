@@ -21,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { formatDate } from "@/utils/formatDate";
+import { getInitials } from "@/constant";
 
 interface UserTableProps {
   users: User[];
@@ -39,9 +40,6 @@ export function UserTable({
   onViewDetails,
 }: UserTableProps) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
-
-  const initials = (firstName?: string, lastName?: string) =>
-    `${firstName?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
 
 
 
@@ -100,7 +98,7 @@ export function UserTable({
                     <AvatarImage src={user.photo || ""} />
 
                     <AvatarFallback className="bg-primary/10 font-semibold text-primary">
-                      {initials(user.firstName, user.lastName)}
+                      {getInitials(user.firstName, user.lastName)}
                     </AvatarFallback>
                   </Avatar>
 
