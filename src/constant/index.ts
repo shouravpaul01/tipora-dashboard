@@ -13,7 +13,6 @@ export const platFormLinks = [
   { label: "Membership Plans", href: "/providers" },
 
   { label: "Create Account", href: "/membership" },
- 
 
   ,
 ];
@@ -114,6 +113,9 @@ export const statusStyles: Record<string, string> = {
 
   REFUNDED:
     "border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-900 dark:bg-slate-950 dark:text-slate-400",
+  WITHDRAW_FEE: "border border-blue-200 bg-blue-50 text-blue-700",
+  TIP_FEE: "border border-green-200 bg-green-50 text-green-700",
+  OTHER: "border border-slate-200 bg-slate-50 text-slate-700",
 };
 
 export const statusDotStyles: Record<string, string> = {
@@ -130,9 +132,12 @@ export const getStatusLabel = (status: string) => {
     PENDING: "Pending",
     FAILED: "Failed",
     REFUNDED: "Refunded",
+    WITHDRAW_FEE: "Withdraw Fee",
+    TIP_FEE: "Tip Fee",
+    OTHER: "Other",
   };
 
   return labels[status] || status;
 };
 export const getInitials = (firstName?: string, lastName?: string) =>
-    `${firstName?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
+  `${firstName?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
