@@ -23,6 +23,7 @@ import {
   HandCoins,
   HandFist,
   Settings,
+  LockKeyhole,
 } from "lucide-react";
 import Logo from "./shared/Logo";
 import { Button } from "./ui/button";
@@ -66,9 +67,9 @@ const data = [
     icon: <HandFist />,
   },
   {
-    title: "Settings",
-    url: "/settings",
-    icon: <Settings />,
+    title: "Change Password",
+    url: "/change-password",
+    icon: <LockKeyhole />,
   },
 ];
 
