@@ -35,6 +35,7 @@ import {
   useUpdateSupportTicketPriorityMutation,
   useUpdateTicketStatusMutation,
 } from "@/redux/api/supportApi";
+import { getStatusLabel, statusStyles } from "@/constant";
 
 interface Ticket {
   id: string;
@@ -72,25 +73,9 @@ interface Ticket {
   } | null;
 }
 
-const statusStyles: Record<string, string> = {
-  OPEN: "border-blue-200 bg-blue-50 text-blue-700",
-  IN_PROGRESS: "border-yellow-200 bg-yellow-50 text-yellow-700",
-  RESOLVED: "border-green-200 bg-green-50 text-green-700",
-  CLOSED: "border-slate-200 bg-slate-50 text-slate-700",
-};
 
-const priorityStyles: Record<string, string> = {
-  LOW: "border-slate-200 bg-slate-50 text-slate-700",
-  MEDIUM: "border-yellow-200 bg-yellow-50 text-yellow-700",
-  HIGH: "border-orange-200 bg-orange-50 text-orange-700",
-  URGENT: "border-red-200 bg-red-50 text-red-700",
-};
 
-const formatEnum = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+
 
 export default function TicketDetailCard({
   ticket,
@@ -162,17 +147,17 @@ export default function TicketDetailCard({
                   statusStyles[ticket.status],
                 )}
               >
-                {formatEnum(ticket.status)}
+                {getStatusLabel(ticket.status)}
               </Badge>
 
               <Badge
                 variant="outline"
                 className={cn(
                   "capitalize",
-                  priorityStyles[ticket.priority],
+                  statusStyles[ticket.priority],
                 )}
               >
-                {formatEnum(ticket.priority)}
+                {getStatusLabel(ticket.priority)}
               </Badge>
             </div>
 
