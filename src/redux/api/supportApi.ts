@@ -102,6 +102,19 @@ export const supportApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Support"],
     }),
+    updateSupportTicketPriority: builder.mutation({
+      query: ({ ticketId, priority }) => ({
+        url: `/support/${ticketId}/priority`,
+        method: "PATCH",
+        body: {
+          priority,
+        },
+      }),
+      invalidatesTags: (_result, _error, { ticketId }) => [
+        "Support",
+        { type: "Support", id: ticketId },
+      ],
+    }),
 
     // ─────────────────────────────────────────────
     // Reopen Ticket - User
@@ -134,6 +147,7 @@ export const {
   useGetAllTicketsQuery,
   useGetTicketByIdQuery,
   useAssignTicketMutation,
+  useUpdateSupportTicketPriorityMutation,
   useAddMessageMutation,
   useUpdateTicketStatusMutation,
   useReopenTicketMutation,
