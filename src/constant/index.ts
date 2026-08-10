@@ -116,6 +116,14 @@ export const statusStyles: Record<string, string> = {
   WITHDRAW_FEE: "border border-blue-200 bg-blue-50 text-blue-700",
   TIP_FEE: "border border-green-200 bg-green-50 text-green-700",
   OTHER: "border border-slate-200 bg-slate-50 text-slate-700",
+  OPEN: "border-blue-200 bg-blue-50 text-blue-700",
+  IN_PROGRESS: "border-yellow-200 bg-yellow-50 text-yellow-700",
+  RESOLVED: "border-green-200 bg-green-50 text-green-700",
+  CLOSED: "border-slate-200 bg-slate-50 text-slate-700",
+  LOW: "border-slate-200 bg-slate-50 text-slate-700",
+  MEDIUM: "border-yellow-200 bg-yellow-50 text-yellow-700",
+  HIGH: "border-orange-200 bg-orange-50 text-orange-700",
+  URGENT: "border-red-200 bg-red-50 text-red-700",
 };
 
 export const statusDotStyles: Record<string, string> = {
@@ -135,6 +143,14 @@ export const getStatusLabel = (status: string) => {
     WITHDRAW_FEE: "Withdraw Fee",
     TIP_FEE: "Tip Fee",
     OTHER: "Other",
+    LOW:'Low',
+    MEDIUM:"Medium",
+    HIGH:"High",
+    URGENT:"Urgent",
+    IN_PROGRESS:"In Progress",
+    RESOLVED:"Resolved",
+    CLOSED:"Closed",
+    OPEN:"Open"
   };
 
   return labels[status] || status;

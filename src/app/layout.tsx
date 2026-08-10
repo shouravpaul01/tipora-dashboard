@@ -4,6 +4,7 @@ import "./globals.css";
 import ReduxProvider from "@/redux/ReduxProvider";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Providers from "@/providers";
 
 const fontSans = Roboto({
   subsets: ["latin"],
@@ -40,8 +41,11 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >
         <Toaster richColors />
+
         <ReduxProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <Providers>
+            <TooltipProvider>{children}</TooltipProvider>
+          </Providers>
         </ReduxProvider>
       </body>
     </html>
