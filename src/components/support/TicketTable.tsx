@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/formatDate";
 import { cn } from "@/lib/utils";
+import { getStatusLabel, statusStyles } from "@/constant";
 
 interface Ticket {
   id: string;
@@ -44,19 +45,7 @@ interface TicketTableProps {
   onViewTicket: (id: string) => void;
 }
 
-const statusStyles: Record<string, string> = {
-  OPEN: "border-blue-200 bg-blue-50 text-blue-700",
-  IN_PROGRESS: "border-yellow-200 bg-yellow-50 text-yellow-700",
-  RESOLVED: "border-green-200 bg-green-50 text-green-700",
-  CLOSED: "border-slate-200 bg-slate-50 text-slate-700",
-};
 
-const priorityStyles: Record<string, string> = {
-  LOW: "border-slate-200 bg-slate-50 text-slate-700",
-  MEDIUM: "border-yellow-200 bg-yellow-50 text-yellow-700",
-  HIGH: "border-orange-200 bg-orange-50 text-orange-700",
-  URGENT: "border-red-200 bg-red-50 text-red-700",
-};
 
 export function TicketTable({ tickets, loading, onViewTicket }: TicketTableProps) {
   return (
@@ -126,13 +115,13 @@ export function TicketTable({ tickets, loading, onViewTicket }: TicketTableProps
                 </span>
               </TableCell>
               <TableCell>
-                <Badge className={cn(priorityStyles[ticket.priority] || "")}>
-                  {ticket.priority}
+                <Badge className={cn(statusStyles[ticket.priority] || "")}>
+                  { getStatusLabel(ticket.priority)}
                 </Badge>
               </TableCell>
               <TableCell>
                 <Badge className={cn(statusStyles[ticket.status] || "")}>
-                  {ticket.status.replace("_", " ")}
+                  {getStatusLabel(ticket.status)}
                 </Badge>
               </TableCell>
               <TableCell>
