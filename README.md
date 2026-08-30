@@ -1,12 +1,12 @@
-<div align="center">
+<div >
 
-  <img src="public/images/logo.svg" alt="Tipora Logo" width="180" height="auto" />
+  <!-- <img src="public/images/logo.svg" alt="Tipora Logo" width="180" height="auto" /> -->
 
   # Tipora Dashboard
   
   **The Modern, High-Performance Admin & Operations Platform for the Tipora Tipping Ecosystem**
 
-  <p align="center">
+  <p >
     <b>Tipora</b> is a next-generation tip-sharing ecosystem enabling users to give individual or multi-person split tips seamlessly via QR code scans with <b>0% platform fee</b> during tipping. This dashboard provides administrators with real-time financial tracking, Stripe payout monitoring, user management, and a token-based live support center.
   </p>
 
