@@ -28,7 +28,7 @@
 - [API & Real-Time Socket Integration](#api--real-time-socket-integration)
 - [Security & Authentication](#security--authentication)
 - [Contributing](#contributing)
-- [License](#license)
+- [Author & License](#author--license)
 
 ---
 
@@ -327,10 +327,12 @@ Real-time features run through the centralized `SocketProvider`:
 
 ---
 
-## License
+## Author & License
 
-This project is proprietary software developed for the **Tipora** platform. All rights reserved.
+Developed, and maintained with ❤️ by **[Shourav Paul](https://github.com/shouravpaul01)**.
+
+This project is proprietary software developed for the **Tipora** platform. All rights reserved &copy; 2026–present.
 
 <div align="center">
-  <sub>Built with ❤️ for the Tipora Operations & Admin Team</sub>
+  <sub>Built with ❤️ by Shourav Paul</sub>
 </div>
