@@ -10,13 +10,7 @@
     <b>Tipora</b> is a next-generation tip-sharing ecosystem enabling users to give individual or multi-person split tips seamlessly via QR code scans with <b>0% platform fee</b> during tipping. This dashboard provides administrators with real-time financial tracking, Stripe payout monitoring, user management, and a token-based live support center.
   </p>
 
-  [Features](#core-features) •
-  [Architecture](#system-architecture) •
-  [Tech Stack](#tech-stack) •
-  [Business Model](#business-model--monetization) •
-  [Getting Started](#getting-started) •
-  [Folder Structure](#folder-structure) •
-  [Environment Variables](#environment-variables)
+ 
 
 </div>
 
@@ -27,7 +21,6 @@
 - [Overview](#overview)
 - [Core Features](#core-features)
 - [Business Model & Monetization](#business-model--monetization)
-- [System Architecture](#system-architecture)
 - [Tech Stack](#tech-stack)
 - [Folder Structure](#folder-structure)
 - [Getting Started](#getting-started)
@@ -145,20 +138,6 @@
 | **Multi-Person Split Tip** | **0% (Free)** | Tip is split proportionally among group members with zero platform cut. |
 | **Standard Withdrawal** | **0% (Free)** | Payout transferred via Stripe Connect within normal ACH/banking days. |
 | **Instant Withdrawal** | **3% Platform Fee** | Immediate transfer to debit card / bank; 3% deducted as platform revenue. |
-
----
-
-## System Architecture
-
-```mermaid
-graph TD
-    Client[Next.js 16 + React 19 Client] -->|State / Mutations| Redux[Redux Toolkit & RTK Query]
-    Redux -->|REST API Calls| Backend[Tipora REST Backend API]
-    Client -->|WebSockets| SocketServer[Socket.io Server]
-    Backend -->|Auth Verification| Middleware[Next.js Edge Proxy Middleware]
-    Backend -->|Payouts & Accounts| Stripe[Stripe Connect Gateway]
-    Backend -->|Database| DB[(Database / Wallet Ledger)]
-```
 
 ---
 
