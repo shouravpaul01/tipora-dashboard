@@ -27,7 +27,6 @@
 - [Environment Variables](#environment-variables)
 - [API & Real-Time Socket Integration](#api--real-time-socket-integration)
 - [Security & Authentication](#security--authentication)
-- [Contributing](#contributing)
 - [Author & License](#author--license)
 
 ---
@@ -314,16 +313,6 @@ Real-time features run through the centralized `SocketProvider`:
 - **Role Guard**: Access to dashboard pages requires `role === "ADMIN"` extracted from a valid JWT.
 - **Next.js Proxy / Route Protection**: Unauthenticated requests are intercepted and redirected to `/login`.
 - **Credential Storage**: Access tokens are stored securely in browser cookies (`accessToken`) and synchronized in Redux state with persistence.
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'feat: Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ---
 
